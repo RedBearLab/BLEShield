@@ -15,11 +15,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "system.h"
 #include "app.h"
 #include "services.h"
-//#include "assertions.h"
 #include "lib_aci.h"
-//#include "lib_traces.h"
-//#include "hal_power.h"
-#include "../ble.h"
+
+#include "ble.h"
 
 my_project_app_state_t app_state;
 

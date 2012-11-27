@@ -13,30 +13,39 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "hal_platform.h"
 #include "hal_aci_tl.h"
 #include "system.h"
-//#include "assertions.h"
 #include "lib_mem.h"
 
-#define HAL_IO_RADIO_REQN 9
-#define HAL_IO_RADIO_RDY 8
+static uint8_t reqn = HAL_IO_RADIO_REQN;
+static uint8_t rdy = HAL_IO_RADIO_RDY;
 
 static hal_aci_data_t received_data;
 static volatile hal_aci_data_t data_to_send;
 static volatile bool spi_transmit_requested;
 static uint8_t spi_readwrite(uint8_t aci_byte); 
 
+void hal_aci_tl_set_rdy_pin(uint8_t pin)
+{
+    rdy = pin;
+}
+
+void hal_aci_tl_set_req_pin(uint8_t pin)
+{
+    reqn = pin;
+}
+
 void hal_aci_tl_io_config()
 {
-  pinMode(HAL_IO_RADIO_REQN, OUTPUT);  
-  digitalWrite(HAL_IO_RADIO_REQN, HIGH);
+  pinMode(reqn, OUTPUT);  
+  digitalWrite(reqn, HIGH);
 
-  pinMode(HAL_IO_RADIO_RDY, INPUT);  
+  pinMode(rdy, INPUT);  
 }
 
 void hal_aci_tl_init()
 {
   received_data.buffer[0] = 0;
 
-  digitalWrite(HAL_IO_RADIO_REQN, HIGH);
+  digitalWrite(reqn, HIGH);
 
   spi_transmit_requested = false;
   data_to_send.buffer[0] = 0;
@@ -63,7 +72,7 @@ bool hal_aci_tl_send(hal_aci_data_t *p_aci_cmd)
       }
     }
 
-    digitalWrite(HAL_IO_RADIO_REQN, LOW);
+    digitalWrite(reqn, LOW);
 
     return(true);
   }
@@ -80,13 +89,13 @@ void hal_aci_tl_poll_rdy_line(void)
   uint8_t max_bytes;
   bool is_transmit_finished = false;
   
-  if ( 1 == digitalRead(HAL_IO_RADIO_RDY) )
+  if ( 1 == digitalRead(rdy) )
   {
     return;
   }
   
 
-  digitalWrite(HAL_IO_RADIO_REQN, LOW);
+  digitalWrite(reqn, LOW);
 
   
   // Send length, receive header
@@ -116,7 +125,7 @@ void hal_aci_tl_poll_rdy_line(void)
     received_data.buffer[byte_cnt+1] =  spi_readwrite(data_to_send.buffer[byte_sent_cnt++]);
   }
   /* Release REQN */
-  digitalWrite(HAL_IO_RADIO_REQN, HIGH);
+  digitalWrite(reqn, HIGH);
 
 //  ASSERT(ERROR_CODE_HAL_ACI_TL_STATUS_BYTE,(0 != received_data.status_byte));
   if (spi_transmit_requested)

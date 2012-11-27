@@ -24,5 +24,6 @@ unsigned char ble_available(void);
 void ble_do_events(void);
 unsigned char ble_connected(void);
 uint16_t ble_read_lib_ver(void);
+void ble_set_pins(uint8_t reqn, uint8_t rdyn);
 
 #endif

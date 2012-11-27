@@ -12,11 +12,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include "hal_platform.h"
 #include "lib_aci.h"
-//#include "lib_traces.h"
 #include "lib_mem.h"
 #include "app.h"
 #include "system.h"
 #include "services.h"
+#include "hal_aci_tl.h"
 
 #include "ble.h"
 
@@ -27,6 +27,11 @@ static uint8_t read_len = 0;
 static uint8_t write_len = 0;
 static uint8_t write_request = 0;
 
+void ble_set_pins(uint8_t reqn, uint8_t rdy)
+{
+    hal_aci_tl_set_req_pin(reqn);
+    hal_aci_tl_set_rdy_pin(rdy);
+}
 
 uint16_t ble_read_lib_ver(void)
 {

@@ -60,6 +60,10 @@ bool hal_aci_tl_send(hal_aci_data_t *aci_buffer);
  */
 void hal_aci_tl_poll_rdy_line(void);
 
+void hal_aci_tl_set_rdy_pin(uint8_t pin);
+
+void hal_aci_tl_set_req_pin(uint8_t pin);
+
 #endif // HAL_ACI_TL_H__
 /** @} */
 
