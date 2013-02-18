@@ -28,7 +28,7 @@ typedef enum my_project_app_state_t {
 extern my_project_app_state_t app_state;
 
 #define APP_RUN_ADV_PERIOD   600  /**< advertising period in multiple of 0.625 msec, must be between 0x0020 and 0x4000.*/
-#define APP_ADVERTISING_TIME  300  /**< time during which the radio will advertise, in seconds */
+#define APP_ADVERTISING_TIME  0  /**< time during which the radio will advertise, in seconds */
 #define APP_TIME_SLEEP        10  /**< time during which the device will stay in deep_sleep, in seconds */
 
 /** @brief main procesing function.
