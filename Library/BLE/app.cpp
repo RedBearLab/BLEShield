@@ -231,7 +231,7 @@ void lib_aci_adv_timeout_hook(aci_evt_t *p_rcvd_evt_data)
 }
 
 extern void data_recv(unsigned char *data, unsigned char len);
-extern uint8_t write_ready;
+extern volatile uint8_t write_ready;
 
 void lib_aci_data_rcvd_hook(aci_evt_t *p_rcvd_evt_data, uint8_t data_len)
 {

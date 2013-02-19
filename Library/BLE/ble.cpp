@@ -20,9 +20,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include "ble.h"
 
-uint8_t write_ready = 1;
-static uint8_t read_buf[65];
-static uint8_t write_buf[65];
+#define BLE_MAX_BUFFER	65
+
+volatile uint8_t write_ready = 1;
+static uint8_t read_buf[BLE_MAX_BUFFER];
+static uint8_t write_buf[BLE_MAX_BUFFER];
 static uint8_t read_len = 0;
 static uint8_t write_len = 0;
 static uint8_t write_request = 0;
@@ -42,25 +44,52 @@ static unsigned char is_connected = 0;
 
 void ble_begin()
 {
-	hal_aci_tl_io_config();  
+    hal_aci_tl_io_config();  
 
-	is_connected = 0;
+    is_connected = 0;
 
-	app_state = APP_INIT;
-	lib_aci_init();
+    app_state = APP_INIT;
+    lib_aci_init();
 
-	ENABLE_INTERRUPTS();
+    ENABLE_INTERRUPTS();
 
-	lib_aci_radio_reset();
+    lib_aci_radio_reset();
 
-	app_state = APP_SLEEP;
-	on_process_app();
+    app_state = APP_SLEEP;
+    on_process_app();
 }
 
+//--
+//	Give some time to let BLE link be stable before to send data
+//--
+static uint16_t stable = 60000;
+
+void ble_write_bytes(unsigned char *data, uint8_t len)
+{
+    for (int i = 0; i < len; i++)
+        ble_write(data[i]);
+}
+
+//--
+//	Write a byte out
+//	If not connected, data will be cleared
+//--
 void ble_write(unsigned char data)
 {
+	if (stable > 0)
+		return;
+
+	if (!is_connected)
+	{
+	    write_ready = 1;
+	    return;
+	}
+
 	write_buf[write_len] = data;
 	write_len++;
+
+	if (write_len > BLE_MAX_BUFFER)
+	    write_len = BLE_MAX_BUFFER;
 }
 
 
@@ -90,15 +119,22 @@ int ble_read()
 	return data;
 }
 
-
 void bleDidConnect()
 {
+    while (stable > 0)
+    {
+        hal_aci_tl_poll_rdy_line();
+        stable--;
+    }
+
     is_connected = 1;
 }
 
 void bleDidDisconnect()
 {
     is_connected = 0;
+    write_ready = 1;
+    stable = 60000;
 }
 
 unsigned char ble_connected()

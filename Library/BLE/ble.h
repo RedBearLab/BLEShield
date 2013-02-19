@@ -19,6 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 void ble_begin(void);
 void ble_write(unsigned char data);
+void ble_write_bytes(unsigned char *data, unsigned char len);
 int ble_read(void);
 unsigned char ble_available(void);
 void ble_do_events(void);
