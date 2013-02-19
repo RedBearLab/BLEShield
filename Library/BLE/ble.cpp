@@ -21,6 +21,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "ble.h"
 
 #define BLE_MAX_BUFFER	65
+#define BLE_STABLE_TIME	 40000
 
 volatile uint8_t write_ready = 1;
 static uint8_t read_buf[BLE_MAX_BUFFER];
@@ -62,7 +63,7 @@ void ble_begin()
 //--
 //	Give some time to let BLE link be stable before to send data
 //--
-static uint16_t stable = 60000;
+static uint16_t stable = BLE_STABLE_TIME;
 
 void ble_write_bytes(unsigned char *data, uint8_t len)
 {
@@ -134,7 +135,7 @@ void bleDidDisconnect()
 {
     is_connected = 0;
     write_ready = 1;
-    stable = 60000;
+    stable = BLE_STABLE_TIME;
 }
 
 unsigned char ble_connected()
