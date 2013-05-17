@@ -17,12 +17,12 @@ http://arduino.cc/en/Guide/Libraries
 Q&A
 ---
 
-Q1: What is BLE dual mode? Is the BLE Shield a dual mode device?<br/>
-A4: Dual mode devices (e.g. iPhone 4S/5) are compatible with both classic and BLE devices.<br\>
-    BLE Shield is a single mode device, so it is not compatible with the classic mode BT.
+Q1: What is BT dual mode? Is the BLE Shield a dual mode device?<br/>
+A1: Dual mode devices (e.g. iPhone 4S/5) are compatible with both Classic and BLE devices.<br\>
+    BLE Shield is a single mode device only, so it is not compatible with the classic mode BT.
 
 Q2: What is BLE Central role? Can the BLE Shield work in Central role?<br\>
-A5: Central role devices (e.g. iPhone 4S/5) can work as a master in the BLE star network, they can perform scanning and connect to peripheral devices.
+A2: Central role devices (e.g. iPhone 4S/5) can work as a master in the BLE star network, they can perform scanning and connect to peripheral devices.
     The BLE Shield can work as peripheral role only, i.e. it can only be connected from other central rol devices.
 
 Q3: Can I get RSSI from the BLE Shield?<br/>
