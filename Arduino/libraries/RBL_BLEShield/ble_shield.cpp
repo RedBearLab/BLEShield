@@ -100,8 +100,8 @@ static bool timing_change_done = false;
 /*Initialize the radio_ack. This is the ack received for every transmitted packet.*/
 //static bool radio_ack_pending = false;
 
-//The maximum size of a packet is 20 bytes.
-#define MAX_TX_BUFF 20
+//The maximum size of a packet is 64 bytes.
+#define MAX_TX_BUFF 64
 static uint8_t tx_buff[MAX_TX_BUFF];
 uint8_t tx_buffer_len = 0;
 
@@ -385,25 +385,47 @@ void ble_do_events()
 			if (lib_aci_is_pipe_available(&aci_state, PIPE_UART_OVER_BTLE_UART_TX_TX))
 			{
 				if(tx_buffer_len > 0)
-				{			
-					if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX, tx_buff, tx_buffer_len))
+				{	
+					unsigned char Index = 0;
+					while(tx_buffer_len > 20)
 					{
-						Serial.print("data transmmit success!  Length: ");
-						Serial.print(tx_buffer_len, DEC);
-						Serial.print("    ");
+						if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX, &tx_buff[Index], 20))
+						{
+							Serial.print("data transmmit success!  Length: ");
+							Serial.print(20, DEC);
+							Serial.print("    ");
+						}
+						else
+						{
+							Serial.println("data transmmit fail !");
+						}
+						tx_buffer_len -= 20;
+						Index += 20;
+						aci_state.data_credit_available--;
+						Serial.print("Data Credit available: ");
+						Serial.println(aci_state.data_credit_available,DEC);
+						ack = 0;
+						while (!ack)
+							process_events();
 					}
-					else
-					{
-						Serial.println("data transmmit fail !");
-					}
-					tx_buffer_len = 0;
-					aci_state.data_credit_available--;
-					Serial.print("Data Credit available: ");
-					Serial.println(aci_state.data_credit_available,DEC);
 
-					ack = 0;
-					while (!ack)
-						process_events();
+						if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX,& tx_buff[Index], tx_buffer_len))
+						{
+							Serial.print("data transmmit success!  Length: ");
+							Serial.print(tx_buffer_len, DEC);
+							Serial.print("    ");
+						}
+						else
+						{
+							Serial.println("data transmmit fail !");
+						}
+						tx_buffer_len = 0;
+						aci_state.data_credit_available--;
+						Serial.print("Data Credit available: ");
+						Serial.println(aci_state.data_credit_available,DEC);
+						ack = 0;
+						while (!ack)
+							process_events();
 				}
 			}
 			process_events();
