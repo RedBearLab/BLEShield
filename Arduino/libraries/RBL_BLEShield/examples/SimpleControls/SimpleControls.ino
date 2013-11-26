@@ -31,6 +31,9 @@ void setup()
   // Set your REQN and RDYN here before ble_begin() if you need
   //ble_set_pins(3, 2);
   
+  // Set your BLE Shield name here, max. length 10
+  //ble_set_name("My Shield");
+  
   // Init. and start BLE library.
   ble_begin();
   

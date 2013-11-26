@@ -77,6 +77,8 @@ However this removes the need to do the setup of the nRF8001 on every reset.*/
 /* Store the setup for the nRF8001 in the flash of the AVR to save on RAM */
 static hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
 
+static char device_name[11] = "BLE Shield";
+
 /*aci_struct that will contain :
 total initial credits
 current credit
@@ -119,6 +121,18 @@ void ble_set_pins(uint8_t reqn, uint8_t rdyn)
 {
 	reqn_pin = reqn;
 	rdyn_pin = rdyn;
+}
+
+void ble_set_name(char *name)
+{       
+    unsigned char len=0;
+    
+    len = strlen(name);
+
+    if(len > 10)
+        Serial.print(F("the new name is too long"));        
+    else
+       strcpy(device_name, name);
 }
 
 void ble_begin()
@@ -273,6 +287,7 @@ static void process_events()
 									Serial.println(F("Evt Device Started: Standby"));
 									//Looking for an iPhone by sending radio advertisements
 									//When an iPhone connects to us we will get an ACI_EVT_CONNECTED event from the nRF8001
+									lib_aci_set_local_data(&aci_state, PIPE_GAP_DEVICE_NAME_SET , (uint8_t *)&device_name , strlen(device_name));
 									lib_aci_connect(180/* in seconds */, 0x0050 /* advertising interval 50ms*/);
 									Serial.println(F("Advertising started"));
 									break;
