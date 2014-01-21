@@ -29,6 +29,11 @@ The BLEFirmata sketch requires BLE Arduino iOS App to play, you can download it 
 If you have any difficulty with Arduino Libraries, read this:
 http://arduino.cc/en/Guide/Libraries
 
+Change the BLE advertising name
+-------------------------------
+
+Before calling to ble_begin(), you can make use of ble_set_name("My BLE") to change the name.
+
 Q&A
 ---
 
