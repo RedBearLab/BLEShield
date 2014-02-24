@@ -49,11 +49,11 @@ Q3: Can I get RSSI from the BLE Shield?<br/>
 A3: The nRF8001 does not provide any function call to get RSSI, so this is not possible. You can get RSSI from the BLE central side, e.g. iPhone 5.
 
 Q4: Can I change the name (BLE Shield) to others?<br/>
-A4: You need to use Nordic's nRFgo Studio and open the BLEShield.xml to edit the settings, it will generate some C source files.<br/>
-    This is out of the scope of the BLE library, so you need to study their documents.
+A4: You can use the API - "ble_set_name(name)" to do that. See examples.
 
 Q5: Can I change the 128-bit UUID with my own one?<br/>
-A5: Same as A2, you can also set the connection interval, advertising data, etc.
+A5: You need to use Nordic's nRFgo Studio and open the BLEShield.xml to edit the settings, it will generate some C source files using the .bat file.<br/>
+You can also set the connection interval, advertising data, etc.
 
 Q6: Can two BLE Shields talk to each other?<br/>
 A6: Since the BLE Shield cannot run in Central role, so this is not possible.
