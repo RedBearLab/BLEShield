@@ -55,5 +55,5 @@ A4: You need to use Nordic's nRFgo Studio and open the BLEShield.xml to edit the
 Q5: Can I change the 128-bit UUID with my own one?<br/>
 A5: Same as A2, you can also set the connection interval, advertising data, etc.
 
-Q6: Can two BLE Shields talk to each other?
+Q6: Can two BLE Shields talk to each other?<br/>
 A6: Since the BLE Shield cannot run in Central role, so this is not possible.
