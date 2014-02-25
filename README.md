@@ -34,6 +34,14 @@ Change the BLE advertising name
 
 Before calling to ble_begin(), you can make use of ble_set_name("My BLE") to change the name.
 
+
+Supported Boards
+----------------
+
+Arduino UNO (328p), Leonardo (32u4), MEGA2560, DUE and their compatible.<br/>
+ChipKit Uno32<br/>
+
+
 Q&A
 ---
 
