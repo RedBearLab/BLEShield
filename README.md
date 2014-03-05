@@ -20,7 +20,8 @@ YourSketch.ino -> RBL_BLEShield -> Nordic_BLE
 Also, you can use Nordic's library directly such as:
 YourSketch.ino -> Nordic_BLE
 
-Read Nordic's BLE SDK for Arduino for details.
+Read Nordic's BLE SDK for Arduino for details, you can use this one directly:
+https://github.com/NordicSemiconductor/ble-sdk-arduino
 
 Note: Remove library version 1.0 (if you have) before to use version 2.0, do not use 1.0 and 2.0 libraries at the same time.
 
