@@ -116,6 +116,7 @@ uint8_t *p_back = &rx_buff[0];
 static unsigned char is_connected = 0;
 
 static uint8_t reqn_pin = 9, rdyn_pin = 8;
+static unsigned char spi_old;
 
 void ble_set_pins(uint8_t reqn, uint8_t rdyn)
 {
@@ -137,97 +138,85 @@ void ble_set_name(char *name)
 
 void ble_begin()
 {
-		 /* Point ACI data structures to the the setup data that the nRFgo studio generated for the nRF8001 */   
-		if (NULL != services_pipe_type_mapping)
-		{
-				aci_state.aci_setup_info.services_pipe_type_mapping = &services_pipe_type_mapping[0];
-		}
-		else
-		{
-				aci_state.aci_setup_info.services_pipe_type_mapping = NULL;
-		 }
-		aci_state.aci_setup_info.number_of_pipes    = NUMBER_OF_PIPES;
-		aci_state.aci_setup_info.setup_msgs         = setup_msgs;
-		aci_state.aci_setup_info.num_setup_msgs     = NB_SETUP_MESSAGES;
+    	spi_old = SPCR;
+    	SPI.setBitOrder(LSBFIRST);
+    	SPI.setClockDivider(SPI_CLOCK_DIV8);
+    	SPI.setDataMode(SPI_MODE0);
 
-			/*
+	/* Point ACI data structures to the the setup data that the nRFgo studio generated for the nRF8001 */   
+	if (NULL != services_pipe_type_mapping)
+	{
+			aci_state.aci_setup_info.services_pipe_type_mapping = &services_pipe_type_mapping[0];
+	}
+	else
+	{
+			aci_state.aci_setup_info.services_pipe_type_mapping = NULL;
+	}
+	aci_state.aci_setup_info.number_of_pipes    = NUMBER_OF_PIPES;
+	aci_state.aci_setup_info.setup_msgs         = setup_msgs;
+	aci_state.aci_setup_info.num_setup_msgs     = NB_SETUP_MESSAGES;
+
+	/*
 		Tell the ACI library, the MCU to nRF8001 pin connections.
 		The Active pin is optional and can be marked UNUSED
-		*/	  	
-		aci_state.aci_pins.board_name = REDBEARLAB_SHIELD_V1_1; //See board.h for details
-		aci_state.aci_pins.reqn_pin   = reqn_pin;
-		aci_state.aci_pins.rdyn_pin   = rdyn_pin;
-		aci_state.aci_pins.mosi_pin   = MOSI;
-		aci_state.aci_pins.miso_pin   = MISO;
-		aci_state.aci_pins.sck_pin    = SCK;
+	*/	  	
+	aci_state.aci_pins.board_name = REDBEARLAB_SHIELD_V1_1; //See board.h for details
+	aci_state.aci_pins.reqn_pin   = reqn_pin;
+	aci_state.aci_pins.rdyn_pin   = rdyn_pin;
+	aci_state.aci_pins.mosi_pin   = MOSI;
+	aci_state.aci_pins.miso_pin   = MISO;
+	aci_state.aci_pins.sck_pin    = SCK;
 	
 #if defined(__SAM3X8E__)
-		aci_state.aci_pins.spi_clock_divider     = 84;
+	aci_state.aci_pins.spi_clock_divider     = 84;
 #else
-		aci_state.aci_pins.spi_clock_divider     = SPI_CLOCK_DIV8;
+	aci_state.aci_pins.spi_clock_divider     = SPI_CLOCK_DIV8;
 #endif
 	  
-		aci_state.aci_pins.reset_pin             = UNUSED;
-		aci_state.aci_pins.active_pin            = UNUSED;
-		aci_state.aci_pins.optional_chip_sel_pin = UNUSED;
+	aci_state.aci_pins.reset_pin             = UNUSED;
+	aci_state.aci_pins.active_pin            = UNUSED;
+	aci_state.aci_pins.optional_chip_sel_pin = UNUSED;
 	  
-		aci_state.aci_pins.interface_is_interrupt	  = false;
-		aci_state.aci_pins.interrupt_number			  = 1;
+	aci_state.aci_pins.interface_is_interrupt	  = false;
+	aci_state.aci_pins.interrupt_number			  = 1;
 
-		//Turn debug printing on for the ACI Commands and Events to be printed on the Serial
-		lib_aci_debug_print(true);
+	//Turn debug printing on for the ACI Commands and Events to be printed on the Serial
+	lib_aci_debug_print(true);
 
-		/*We reset the nRF8001 here by toggling the RESET line connected to the nRF8001
-		and initialize the data structures required to setup the nRF8001*/
-		lib_aci_init(&aci_state); 
-		delay(100);
-		/*lib_aci_radio_reset();  
-		while (1)
-		{
-				//Wait for the command response of the radio reset command.
-				//as the nRF8001 will be in either SETUP or STANDBY after the ACI Reset Radio is processed  
-				if (true == lib_aci_event_get(&aci_state, &aci_data))
-				{
-					aci_evt_t * aci_evt;      
-					aci_evt = &aci_data.evt;    
-					if (ACI_EVT_CMD_RSP == aci_evt->evt_opcode)
-					{
-							if (ACI_STATUS_ERROR_DEVICE_STATE_INVALID == aci_evt->params.cmd_rsp.cmd_status) //in SETUP
-							{
-									Serial.println(F("Do setup"));
-									if (ACI_STATUS_TRANSACTION_COMPLETE != do_aci_setup(&aci_state))
-									{
-											Serial.println(F("Error in ACI Setup"));
-									}              
-							}
-							else if (ACI_STATUS_SUCCESS == aci_evt->params.cmd_rsp.cmd_status) //We are now in STANDBY
-							{*/
-									//Looking for an iPhone by sending radio advertisements
-									//When an iPhone connects to us we will get an ACI_EVT_CONNECTED event from the nRF8001
-				//					lib_aci_connect(180/* in seconds */, 0x0050 /* advertising interval 50ms*/);
-				/*					Serial.println(F("Advertising started"));              
-							}
-							break;
-					}
-					else
-					{
-							Serial.println(F("Device Started"));
-					} 
-				}
-		}*/
+	/*
+		We reset the nRF8001 here by toggling the RESET line connected to the nRF8001
+		and initialize the data structures required to setup the nRF8001
+	*/
+	lib_aci_init(&aci_state); 
+	delay(100);
+
+	SPCR = spi_old;
+	SPI.begin();
+}
+
+unsigned char ble_is_busy()
+{
+    if(digitalRead(reqn_pin) == HIGH)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
 }
 
 volatile byte ack = 0;
 
 void ble_write(unsigned char data)
 {	    
-		if(tx_buffer_len == MAX_TX_BUFF)
-		{
-				return;
-		}	
-		tx_buff[tx_buffer_len] = data;
-		tx_buffer_len++;	
-		
+	if (tx_buffer_len == MAX_TX_BUFF)
+	{
+		return;
+	}
+
+	tx_buff[tx_buffer_len] = data;
+	tx_buffer_len++;		
 }
 
 void ble_write_bytes(unsigned char *data, uint8_t len)
@@ -397,52 +386,60 @@ static void process_events()
 
 void ble_do_events()
 {
-			if (lib_aci_is_pipe_available(&aci_state, PIPE_UART_OVER_BTLE_UART_TX_TX))
-			{
-				if(tx_buffer_len > 0)
-				{	
-					unsigned char Index = 0;
-					while(tx_buffer_len > 20)
-					{
-						if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX, &tx_buff[Index], 20))
-						{
-							Serial.print("data transmmit success!  Length: ");
-							Serial.print(20, DEC);
-							Serial.print("    ");
-						}
-						else
-						{
-							Serial.println("data transmmit fail !");
-						}
-						tx_buffer_len -= 20;
-						Index += 20;
-						aci_state.data_credit_available--;
-						Serial.print("Data Credit available: ");
-						Serial.println(aci_state.data_credit_available,DEC);
-						ack = 0;
-						while (!ack)
-							process_events();
-					}
+        spi_old = SPCR;
+        SPI.setBitOrder(LSBFIRST);
+        SPI.setClockDivider(SPI_CLOCK_DIV8);
+        SPI.setDataMode(SPI_MODE0);
 
-						if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX,& tx_buff[Index], tx_buffer_len))
-						{
-							Serial.print("data transmmit success!  Length: ");
-							Serial.print(tx_buffer_len, DEC);
-							Serial.print("    ");
-						}
-						else
-						{
-							Serial.println("data transmmit fail !");
-						}
-						tx_buffer_len = 0;
-						aci_state.data_credit_available--;
-						Serial.print("Data Credit available: ");
-						Serial.println(aci_state.data_credit_available,DEC);
-						ack = 0;
-						while (!ack)
-							process_events();
+	if (lib_aci_is_pipe_available(&aci_state, PIPE_UART_OVER_BTLE_UART_TX_TX))
+	{
+		if(tx_buffer_len > 0)
+		{	
+			unsigned char Index = 0;
+			while(tx_buffer_len > 20)
+			{
+				if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX, &tx_buff[Index], 20))
+				{
+					Serial.print("data transmmit success!  Length: ");
+					Serial.print(20, DEC);
+					Serial.print("    ");
 				}
+				else
+				{
+					Serial.println("data transmmit fail !");
+				}
+				tx_buffer_len -= 20;
+				Index += 20;
+				aci_state.data_credit_available--;
+				Serial.print("Data Credit available: ");
+				Serial.println(aci_state.data_credit_available,DEC);
+				ack = 0;
+				while (!ack)
+					process_events();
 			}
-			process_events();
+
+			if(true == lib_aci_send_data(PIPE_UART_OVER_BTLE_UART_TX_TX,& tx_buff[Index], tx_buffer_len))
+			{
+				Serial.print("data transmmit success!  Length: ");
+				Serial.print(tx_buffer_len, DEC);
+				Serial.print("    ");
+			}
+			else
+			{
+				Serial.println("data transmmit fail !");
+			}
+			tx_buffer_len = 0;
+			aci_state.data_credit_available--;
+			Serial.print("Data Credit available: ");
+			Serial.println(aci_state.data_credit_available,DEC);
+			ack = 0;
+			while (!ack)
+				process_events();
+		}
+	}
+
+	process_events();
+
+	SPCR = spi_old;
 }
 
