@@ -14,7 +14,7 @@
 //* Includes
 //******************************************************************************
 
-#include "BleFirmata.h"
+#include "BLEFirmata.h"
 #include "HardwareSerial.h"
 #include "ble_shield.h"
 
