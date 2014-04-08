@@ -49,9 +49,14 @@ unsigned char len = 0;
 
 void loop()
 {
-  while ( ble_available() )
-    Serial.write(ble_read());
-
+  if (ble_available())
+  {
+    while ( ble_available() )
+      Serial.write(ble_read());
+      
+    Serial.println();
+  }
+  
   while ( Serial.available() )
   {
     unsigned char c = Serial.read();    
