@@ -13,12 +13,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /*
  *    Chat
  *
- *    Simple chat sketch, work with the Chat iOS App.
- *    Type something from Arduino serial monitor to
- *    send to the Chat App or vice verse.
- *
- *    Remember to set "Both NL & CR" and "57600 baud"
- *    in the Serial Monitor.
+ *    Simple chat sketch, work with the Chat iOS/Android App.
+ *    Type something from the Arduino serial monitor to send
+ *    to the Chat App or vice verse.
  *
  */
 
