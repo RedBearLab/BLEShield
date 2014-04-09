@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2012, 2013 RedBearLab
+Copyright (c) 2012-2014 RedBearLab
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -49,7 +49,7 @@ unsigned char len = 0;
 
 void loop()
 {
-  if (ble_available())
+  if ( ble_available() )
   {
     while ( ble_available() )
       Serial.write(ble_read());
@@ -57,22 +57,12 @@ void loop()
     Serial.println();
   }
   
-  while ( Serial.available() )
+  if ( Serial.available() )
   {
-    unsigned char c = Serial.read();    
-    if (c != 0x0A)
-    {
-      if (len < 16)
-        buf[len++] = c;
-    }
-    else
-    {
-      buf[len++] = 0x0A;
-      
-      for (int i = 0; i < len; i++)
-        ble_write(buf[i]);
-      len = 0;
-    }
+    delay(5);
+    
+    while ( Serial.available() )
+        ble_write( Serial.read() );
   }
   
   ble_do_events();
