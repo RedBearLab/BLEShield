@@ -1,7 +1,7 @@
 
 /*
 
-Copyright (c) 2012, 2013 RedBearLab
+Copyright (c) 2012-2014 RedBearLab
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -77,7 +77,12 @@ However this removes the need to do the setup of the nRF8001 on every reset.*/
 /* Store the setup for the nRF8001 in the flash of the AVR to save on RAM */
 static hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
 
-static char device_name[11] = "BLE Shield";
+/* Default name */
+#if defined(BLEND_MICRO)
+  static char device_name[11] = "BlendMicro";
+#else
+  static char device_name[11] = "BLE Shield";
+#endif
 
 /*aci_struct that will contain :
 total initial credits
@@ -115,7 +120,13 @@ uint8_t *p_before = &rx_buff[0] ;
 uint8_t *p_back = &rx_buff[0];
 static unsigned char is_connected = 0;
 
-static uint8_t reqn_pin = 9, rdyn_pin = 8;
+/* Default handshaking pins to nRF8001 */
+#if defined(BLEND_MICRO)
+  static uint8_t reqn_pin = 6, rdyn_pin = 7;
+#else
+  static uint8_t reqn_pin = 9, rdyn_pin = 8;
+#endif
+
 static unsigned char spi_old;
 
 void ble_set_pins(uint8_t reqn, uint8_t rdyn)
@@ -181,7 +192,7 @@ void ble_begin()
 	aci_state.aci_pins.interrupt_number			  = 1;
 
 	//Turn debug printing on for the ACI Commands and Events to be printed on the Serial
-	lib_aci_debug_print(true);
+	lib_aci_debug_print(false);
 
 	/*
 		We reset the nRF8001 here by toggling the RESET line connected to the nRF8001
