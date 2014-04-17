@@ -5,10 +5,12 @@ BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feat
 
 BLE Shield Library is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
 
-Usage
------
 
-RBL BLE Shield library version 2.0
+How to use
+----------
+
+Get latest release version here:
+https://github.com/RedBearLab/BLEShield/releases
 
 Put Nordic_BLE and RBL_BLEShield folders to Arduino libraries folder (e.g. Documents/Arduino/libraries) and load the examples from RBL_BLEShield.
 
@@ -20,16 +22,22 @@ YourSketch.ino -> RBL_BLEShield -> Nordic_BLE
 Also, you can use Nordic's library directly such as:
 YourSketch.ino -> Nordic_BLE
 
-Read Nordic's BLE SDK for Arduino for details with tutorials to write your own services, you can use this one directly:
+Read Nordic's BLE SDK for Arduino for details with tutorials to write your own services, you can use this one directly:<br/>
 https://github.com/NordicSemiconductor/ble-sdk-arduino
-https://redbearlab.zendesk.com/forums/21921933-Nordic-nRF8001-SDK-for-Arduino
 
 Note: Remove library version 1.0 (if you have) before to use version 2.0, do not use 1.0 and 2.0 libraries at the same time.
 
-The BLEFirmata sketch requires BLE Arduino iOS App to play, you can download it from on Apple App Store.
-
 If you have any difficulty with Arduino Libraries, read this:
 http://arduino.cc/en/Guide/Libraries
+
+There are two Apps available from the Apple AppStore:<br/>
+
+1. BLE Arduino<br>
+It is for the BLEFirmata sketch and works for iOS 6
+
+2. BLE Controller<br>
+It is for the BLEController sketch and works for iOS 7
+
 
 Change the BLE advertising name
 -------------------------------
@@ -42,6 +50,13 @@ Supported Boards
 
 Arduino UNO (328p), Leonardo (32u4), MEGA2560, DUE and their compatible.<br/>
 ChipKit Uno32<br/>
+
+
+Forum
+-----
+
+Please visit our forum if you have anything to discuss and share:<br/>
+https://redbearlab.zendesk.com/forums
 
 
 Q&A
