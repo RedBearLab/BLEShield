@@ -5,27 +5,29 @@ BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feat
 
 BLE Shield Library is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
 
+This library is to add some simple APIs to Nordic's nRF8001 library for simple BLE operations, and the BLE Shield library relies on it to work.<br/>
+https://github.com/NordicSemiconductor/ble-sdk-arduino
+
 
 How to use
 ----------
 
-Get latest release version here:
+Get latest release version here:<br/>
 https://github.com/RedBearLab/BLEShield/releases
 
-Put Nordic_BLE and RBL_BLEShield folders to Arduino libraries folder (e.g. Documents/Arduino/libraries) and load the examples from RBL_BLEShield.
+Get latest release of Nordic nRF8001 SDK for Arduino here:<br/>
+https://github.com/NordicSemiconductor/ble-sdk-arduino/releases
 
-The BLE Shield library provides APIs for your sketch.
+Put Nordic's BLE and RBL_BLEShield folders to Arduino libraries folder (e.g. Documents/Arduino/libraries) and load the examples from RBL_BLEShield (Nordic also provides many examples).
 
 The library structure and dependency:
-YourSketch.ino -> RBL_BLEShield -> Nordic_BLE
+YourSketch.ino -> RBL_BLEShield -> Nordic's BLE
 
 Also, you can use Nordic's library directly such as:
-YourSketch.ino -> Nordic_BLE
+YourSketch.ino -> Nordic's BLE
 
 Read Nordic's BLE SDK for Arduino for details with tutorials to write your own services, you can use this one directly:<br/>
 https://github.com/NordicSemiconductor/ble-sdk-arduino
-
-Note: Remove library version 1.0 (if you have) before to use version 2.0, do not use 1.0 and 2.0 libraries at the same time.
 
 If you have any difficulty with Arduino Libraries, read this:
 http://arduino.cc/en/Guide/Libraries
@@ -50,7 +52,7 @@ Supported Boards
 
 Arduino UNO (328p), Leonardo (32u4), MEGA2560, DUE and their compatible.<br/>
 ChipKit Uno32<br/>
-
+RBL BlendMicro
 
 Forum
 -----
