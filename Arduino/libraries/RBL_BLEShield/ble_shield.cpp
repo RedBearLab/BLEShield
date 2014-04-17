@@ -10,13 +10,6 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-#include <boards.h>
-#include <lib_aci.h>
-#include <aci_setup.h>
-#include <SPI.h>
-
-#include <avr/sleep.h>
-#include <avr/interrupt.h>
 
 #include "ble_shield.h"
 
@@ -31,7 +24,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /* Store the setup for the nRF8001 in the flash of the AVR to save on RAM */
 static hal_aci_data_t setup_msgs[NB_SETUP_MESSAGES] PROGMEM = SETUP_MESSAGES_CONTENT;
 
+#if defined(BLEND_MICRO)
+static char device_name[11] = "BlendMicro";
+#else
 static char device_name[11] = "BLE Shield";
+#endif
 
 /*aci_struct that will contain :
 total initial credits
@@ -67,9 +64,11 @@ uint8_t rx_buff[MAX_RX_BUFF+1];
 uint8_t rx_buffer_len = 0;
 uint8_t *p_before = &rx_buff[0] ;
 uint8_t *p_back = &rx_buff[0];
+
 static unsigned char is_connected = 0;
 
-static uint8_t reqn_pin = 9, rdyn_pin = 8;
+uint8_t reqn_pin = DEFAULT_REQN, rdyn_pin = DEFAULT_RDYN;
+
 static unsigned char spi_old;
 
 /* Define how assert should function in the BLE library */
@@ -85,8 +84,12 @@ void __ble_assert(const char *file, uint16_t line)
 
 void ble_set_pins(uint8_t reqn, uint8_t rdyn)
 {
+#if defined(BLEND_MICRO)
+    return;
+#else
 	reqn_pin = reqn;
-	rdyn_pin = rdyn;
+    rdyn_pin = rdyn;
+#endif
 }
 
 void ble_begin()
