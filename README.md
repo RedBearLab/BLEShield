@@ -9,8 +9,10 @@ BLE Shield Library is a software library allows Arduino board to control the BLE
 New Repository
 ==============
 
-The library files are moved to this repository:<br/>
+This repository now contains hardware information only, the library files are moved to this repository:<br/>
 https://github.com/RedBearLab/nRF8001
+
+The nRF8001 library will be shared for differnet products like the BLE Shield and Blend Micro.
 
 
 Forum
