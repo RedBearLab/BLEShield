@@ -1,58 +1,17 @@
-BLE Shield Library
-------------------
+BLE Shield
+----------
 
 BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feature to Arduino boards.
 
 BLE Shield Library is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
 
-This library is to add some simple APIs to Nordic's nRF8001 library for simple BLE operations, and the BLE Shield library relies on it to work.<br/>
-https://github.com/NordicSemiconductor/ble-sdk-arduino
 
+New Repository
+--------------
 
-How to use
-----------
+The library files are moved to this repository:<br/>
+https://github.com/RedBearLab/nRF8001
 
-Get latest release version here:<br/>
-https://github.com/RedBearLab/BLEShield/releases
-
-Get latest release of Nordic nRF8001 SDK for Arduino here:<br/>
-https://github.com/NordicSemiconductor/ble-sdk-arduino/releases
-
-Put Nordic's BLE and RBL_BLEShield folders to Arduino libraries folder (e.g. Documents/Arduino/libraries) and load the examples from RBL_BLEShield (Nordic also provides many examples).
-
-The library structure and dependency:
-YourSketch.ino -> RBL_BLEShield -> Nordic's BLE
-
-Also, you can use Nordic's library directly such as:
-YourSketch.ino -> Nordic's BLE
-
-Read Nordic's BLE SDK for Arduino for details with tutorials to write your own services, you can use this one directly:<br/>
-https://github.com/NordicSemiconductor/ble-sdk-arduino
-
-If you have any difficulty with Arduino Libraries, read this:
-http://arduino.cc/en/Guide/Libraries
-
-There are two Apps available from the Apple AppStore:<br/>
-
-1. BLE Arduino<br>
-It is for the BLEFirmata sketch and works for iOS 6
-
-2. BLE Controller<br>
-It is for the BLEController sketch and works for iOS 7
-
-
-Change the BLE advertising name
--------------------------------
-
-Before calling to ble_begin(), you can make use of ble_set_name("My BLE") to change the name.
-
-
-Supported Boards
-----------------
-
-Arduino UNO (328p), Leonardo (32u4), MEGA2560, DUE and their compatible.<br/>
-ChipKit Uno32<br/>
-RBL BlendMicro
 
 Forum
 -----
