@@ -1,5 +1,5 @@
 BLE Shield
-----------
+==========
 
 BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feature to Arduino boards.
 
@@ -7,21 +7,21 @@ BLE Shield Library is a software library allows Arduino board to control the BLE
 
 
 New Repository
---------------
+==============
 
 The library files are moved to this repository:<br/>
 https://github.com/RedBearLab/nRF8001
 
 
 Forum
------
+=====
 
 Please visit our forum if you have anything to discuss and share:<br/>
 https://redbearlab.zendesk.com/forums
 
 
 Q&A
----
+===
 
 Q1: What is BT dual mode? Is the BLE Shield a dual mode device?<br/>
 A1: Dual mode devices (e.g. iPhone 4S/5) are compatible with both Classic and BLE devices.<br\>
