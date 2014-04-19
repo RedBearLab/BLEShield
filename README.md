@@ -3,7 +3,7 @@ BLE Shield
 
 BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feature to Arduino boards.
 
-BLE Shield Library is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
+BLE Shield Library (now called nRF8001 library) is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
 
 
 New Repository
@@ -13,6 +13,9 @@ This repository now contains hardware information only, the library files are mo
 https://github.com/RedBearLab/nRF8001
 
 The nRF8001 library will be shared for differnet products like the BLE Shield and Blend Micro.
+
+You can use Nordic's nRF8001 SDK for Arduino with the BLE Shield directly, it has a lot of examples and tutorials for BLE development.<br/>
+https://github.com/NordicSemiconductor/ble-sdk-arduino
 
 
 Forum
