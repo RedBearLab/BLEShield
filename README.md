@@ -1,28 +1,35 @@
 BLE Shield
 ==========
 
-BLE Shield is a nRF8001 BLE controller chip with circuitry that enables BLE feature to Arduino boards.
-
-BLE Shield Library (now called nRF8001 library) is a software library allows Arduino board to control the BLE Shield, so that it can send/receive data to/from BLE devices such as iPhone.
+The BLE Shield is an Arduino compatible shield with nRF8001 BLE controller chip that enables BLE feature for Arduino boards.
 
 
-New Repository
-==============
+Library
+=======
 
-This repository now contains hardware information only, the library files are moved to this repository:<br/>
-https://github.com/RedBearLab/nRF8001
+BLE Shield Library (now called nRF8001 library) is a software library allows Arduino board to control the BLE Shield, it provides a simple TX/RX service for exchanging data between nRF8001 peripheral device and central devices such as iPhone/iPad/Android.
 
-The nRF8001 library will be shared for differnet products like the BLE Shield and Blend Micro.
+This repository contains hardware information and the old version of BLE Shield library for Arduino. The library file will be changed to the new repository:
+[RBL_nRF8001 library](https://github.com/RedBearLab/nRF8001)
 
-You can use Nordic's nRF8001 SDK for Arduino with the BLE Shield directly, it has a lot of examples and tutorials for BLE development.<br/>
-https://github.com/NordicSemiconductor/ble-sdk-arduino
+The library files here are just kept for future reference only (require [Nordic library](https://github.com/NordicSemiconductor/ble-sdk-arduino/releases) to work)
+
+The nRF8001 library will be shared for different products like the BLE Shield and Blend Micro,  
+
+Actually, if your are learning how BLE works rather than just exchanging data, you can use Nordic's nRF8001 SDK for Arduino with the BLE Shield directly, it has a lot of examples and tutorials for BLE beginers.<br/>
+[Nordic BLE SDK for Arduino](https://github.com/NordicSemiconductor/ble-sdk-arduino)
 
 
-Forum
-=====
+Support & Resources
+===================
 
-Please visit our forum if you have anything to discuss and share:<br/>
-https://redbearlab.zendesk.com/forums
+[BLE Shield Forum](https://redbearlab.zendesk.com/forums/21286751-BLE-Shield)
+
+[Nordic nRF8001 SDK for Arduino](https://redbearlab.zendesk.com/forums/21921933-Nordic-nRF8001-SDK-for-Arduino)
+
+[Nordic Developer Zone](https://devzone.nordicsemi.com/)
+
+[Bluetooth SIG](https://www.bluetooth.org/en-us)
 
 
 Q&A
