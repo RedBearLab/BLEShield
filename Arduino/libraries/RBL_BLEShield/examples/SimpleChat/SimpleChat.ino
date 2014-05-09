@@ -19,11 +19,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  *
  */
 
-//"services.h/spi.h/boards.h" is needed in every new project
+//"spi.h/boards.h" is needed in every new project
 #include <SPI.h>
 #include <boards.h>
-#include <RBL_nRF8001.h>
-#include <services.h> 
+#include <ble_shield.h>
 
 void setup()
 {  
