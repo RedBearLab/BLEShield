@@ -1,3 +1,4 @@
+
 BLE Shield
 ==========
 
@@ -7,17 +8,19 @@ The BLE Shield is an Arduino compatible shield with nRF8001 BLE controller chip 
 Library
 =======
 
+You need to install the BLE SDK for Arduino in order to use this Shield for BLE Applications. To install it, please use the Arduino (IDE version 1.6.4) Library Manager and read [this document](https://github.com/RedBearLab/BLEShield/blob/master/Docs/LibraryManager.pdf).
+
+Click [here](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ), if you have issues when using the Library Manager.
+
 BLE Shield Library (now called nRF8001 library) is a software library allows Arduino board to control the BLE Shield, it provides a simple TX/RX service for exchanging data between nRF8001 peripheral device and central devices such as iPhone/iPad/Android.
 
 This repository contains hardware information and the old version of BLE Shield library for Arduino. The library file will be changed to the new repository:
 [RBL_nRF8001 library](https://github.com/RedBearLab/nRF8001)
 
-The library files here are just kept for future reference only (require [Nordic library](https://github.com/NordicSemiconductor/ble-sdk-arduino/releases) to work)
-
-The nRF8001 library will be shared for different products like the BLE Shield and Blend Micro,  
+The library files here are just kept for future reference only (require [Nordic library](https://github.com/cheong2k/ble-sdk-arduino) to work)
 
 Actually, if your are learning how BLE works rather than just exchanging data, you can use Nordic's nRF8001 SDK for Arduino with the BLE Shield directly, it has a lot of examples and tutorials for BLE beginers.<br/>
-[Nordic BLE SDK for Arduino](https://github.com/NordicSemiconductor/ble-sdk-arduino)
+[Nordic BLE SDK for Arduino](https://github.com/cheong2k/ble-sdk-arduino)
 
 
 Support & Resources
